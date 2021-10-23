@@ -140,14 +140,6 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-We were 5 originally on this project : 
- - LAM YEE MAN Nick
- - DEMEESTER Alexandre
- - DEMOL Axel
- - HOARAU Alexandre
- - CHAN YEN MAN Garance
-
-
 
 <!-- CONTACT -->
 ## Contact
