@@ -97,6 +97,7 @@ Every usable keys are displayed on the screen :
 <kbd>F3</kbd> : Next Lib
 <kbd>F4</kbd> : Previous Game
 <kbd>F5</kbd> : Next Game
+
 <kbd>DEL</kbd> : Restart Game
 <kbd>B</kbd> : Back to Menu
 <kbd>ESC</kbd> : Quit
