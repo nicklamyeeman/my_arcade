@@ -5,57 +5,66 @@
 ## Makefile
 ##
 
-SRC	=	$(SRC_SFML)	\
-		$(SRC_CURSES)	\
-		$(SRC_SDL)
+SRC			=	$(SRC_SFML)		\
+				$(SRC_CURSES)	\
+				$(SRC_SDL)
 
-OBJ	=	$(OBJ_CURSES)	\
-		$(OBJ_SFML)	\
-		$(OBJ_SDL)
+OBJ			=	$(OBJ_SFML)		\
+				$(OBJ_CRUSES)	\
+				$(OBJ_SDL)
 
-NAMES	=	$(SFML)		\
-		$(CURSES)	\
-		$(SDL)
+NAMES		=	$(SFML)			\
+				$(CURSES)		\
+				$(SDL)
 
-SRC_SFML=	DisplaySFML.cpp
+SRC_SFML	=	DisplaySFML.cpp
 
-OBJ_SFML=	$(SRC_SFML:.cpp=.o)
+OBJ_SFML	=	$(SRC_SFML:.cpp=.o)
 
-SRC_CURSES=	DisplayNcurses.cpp
+SRC_CURSES	=	DisplayNcurses.cpp
 
-OBJ_CURSES=	$(SRC_CURSES:.cpp=.o)
+OBJ_CURSES	=	$(SRC_CURSES:.cpp=.o)
 
-SRC_SDL	=	DisplaySDL.cpp
+SRC_SDL		=	DisplaySDL.cpp
 
-OBJ_SDL	=	$(SRC_SDL:.cpp=.o)
+OBJ_SDL		=	$(SRC_SDL:.cpp=.o)
 
-INC_DIR	=	../include
+INC			=	-I ../include
 
-CXXFLAGS=	-fPIC -shared -W -Wall -Wextra -I$(INC_DIR)
+CXXFLAGS	=	-W -Wall -Wextra -Werror -std=c++11
 
-SFML	=	lib_arcade_sfml.so
+SFMLFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-audio -lsfml-network -lsfml-system
 
-CURSES	=	lib_arcade_ncurses.so
+CURSESFLAGS	=	-lncurses
 
-SDL	=	lib_arcade_sdl.so
+SDLFLAGS	=	-lSDL2 -lSDL2_image -lSDL2_ttf
+
+SFML		=	lib_arcade_sfml.so
+
+CURSES		=	lib_arcade_ncurses.so
+
+SDL			=	lib_arcade_sdl.so
 
 all:	sfml curses sdl
 
-sfml:	$(OBJ_SFML)
-	@g++ -o $(SFML) $(OBJ_SFML) $(CXXFLAGS) -lsfml-graphics -lsfml-window
+sfml:
+		g++ -c -o $(OBJ_SFML) $(INC) $(CXXFLAGS) $(SRC_SFML)
+		g++ -fPIC -shared -o $(SFML) $(INC) $(CXXFLAGS) $(SFMLFLAGS) $(OBJ_SFML)
 
-curses: $(OBJ_CURSES)
-	@g++ -o $(CURSES) $(OBJ_CURSES) $(CXXFLAGS) -lncurses
+curses:
+		g++ -c -o $(OBJ_CURSES) $(INC) $(CXXFLAGS) $(SRC_CURSES)
+		g++ -fPIC -shared -o $(CURSES) $(INC) $(CXXFLAGS) $(CURSESFLAGS) $(OBJ_CURSES)
 
-sdl:	$(OBJ_SDL)
-	@g++ -o $(SDL) $(OBJ_SDL) $(CXXFLAGS) -lSDL2 -lSDL2_image -lSDL2_ttf
+sdl:
+		g++ -c -o $(OBJ_SDL) $(INC) $(CXXFLAGS) $(SRC_SDL)
+		g++ -fPIC -shared -o $(SDL) $(INC) $(CXXFLAGS) $(SDLFLAGS) $(OBJ_SDL)
 
 clean:
-	@rm -f $(OBJ)
+		rm -f $(OBJ)
 
 fclean:	clean
-	@rm -f $(NAMES)
+		rm -f $(NAMES)
 
-re:	fclean all
+re:		fclean all
 
 .PHONY: all sfml sdl curses clean fclean re

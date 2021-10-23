@@ -5,45 +5,47 @@
 ## Makefile
 ##
 
-SRC	=	$(SRC_SNAKE)	\
-		$(SRC_PACMAN)
+SRC			=	$(SRC_SNAKE)	\
+				$(SRC_PACMAN)
 
-OBJ	=	$(OBJ_SNAKE)	\
-		$(OBJ_PACMAN)
+OBJ			=	$(OBJ_SNAKE)	\
+				$(OBJ_PACMAN)
 
-NAMES	=	$(SNAKE)	\
-		$(PACMAN)
+NAMES		=	$(SNAKE)		\
+				$(PACMAN)
 
-SRC_SNAKE=	Snake.cpp
+SRC_SNAKE	=	Snake.cpp
 
-SRC_PACMAN=	Pacman.cpp
+SRC_PACMAN	=	Pacman.cpp
 
-OBJ_SNAKE=	$(SRC_SNAKE:.cpp=.o)
+OBJ_SNAKE	=	$(SRC_SNAKE:.cpp=.o)
 
-OBJ_PACMAN=	$(SRC_PACMAN:.cpp=.o)
+OBJ_PACMAN	=	$(SRC_PACMAN:.cpp=.o)
 
-INC_DIR	=	../include
+INC			=	-I ../include
 
-CXXFLAGS=	-fPIC -shared -W -Wall -Wextra -I$(INC_DIR)
+CXXFLAGS 	=	-W -Wall -Wextra -Werror -std=c++11
 
-SNAKE	=	lib_arcade_nibbler.so
+SNAKE		=	lib_arcade_nibbler.so
 
-PACMAN	=	lib_arcade_pacman.so
+PACMAN		=	lib_arcade_pacman.so
 
 all:	snake pacman
 
-snake:	$(OBJ_SNAKE)
-	@g++ -o $(SNAKE) $(OBJ_SNAKE) $(CXXFLAGS)
+snake:
+		g++ -c -o $(OBJ_SNAKE) $(INC) $(CXXFLAGS) $(SRC_SNAKE)
+		g++ -fPIC -shared -o $(SNAKE) $(INC) $(CXXFLAGS) $(OBJ_SNAKE)
 
-pacman:	$(OBJ_PACMAN)
-	@g++ -o $(PACMAN) $(OBJ_PACMAN) $(CXXFLAGS)
+pacman:
+		g++ -c -o $(OBJ_PACMAN) $(INC) $(CXXFLAGS) $(SRC_PACMAN)
+		g++ -fPIC -shared -o $(PACMAN) $(INC) $(CXXFLAGS) $(OBJ_PACMAN)
 
 clean:
-	@rm -f $(OBJ)
+		rm -f $(OBJ)
 
 fclean:	clean
-	@rm -f $(NAMES)
+		rm -f $(NAMES)
 
-re:	fclean all
+re:		fclean all
 
 .PHONY: all snake pacman clean fclean re

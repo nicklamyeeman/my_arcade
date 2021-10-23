@@ -5,44 +5,46 @@
 ## Makefile
 ##
 
-SRC_DIR	=	./core/
+SRC_DIR		=	./core/
 
-SRC	=	main.cpp 		\
-		$(SRC_DIR)Core.cpp	\
-		$(SRC_DIR)OpenDir.cpp	\
-		$(SRC_DIR)Score.cpp
+SRC			=	$(SRC_DIR)Core.cpp		\
+				$(SRC_DIR)OpenDir.cpp	\
+				$(SRC_DIR)Score.cpp		\
+				main.cpp
 
-LIB_DIR	=	lib/
+LIB_DIR		=	lib/
 
-GAME_DIR=	games/
+GAME_DIR	=	games/
 
-OBJ	=	$(SRC:.cpp=.o)
+OBJ			=	$(SRC:.cpp=.o)
 
-CXXFLAGS=	-W -Wall -Wextra -Iinclude -ldl
+INC			=	-I include
 
-NAME	=	arcade
+CXXFLAGS	+=	$(INC) -W -Wall -Wextra -Werror -std=c++11
+
+NAME		=	arcade
 
 all:	graphicals games core
 
 core:	$(OBJ)
-	g++ -o $(NAME) $(OBJ) $(CXXFLAGS)
+		g++ -o $(NAME) $(OBJ)
 
 games:
-	make -sC games/
+		make -sC games/
 
 graphicals:
-	make -sC lib/
+		make -sC lib/
 
 clean:
-	make -sC lib/ clean
-	make -sC games/ clean
-	@rm -f $(OBJ)
+		make -sC lib/ clean
+		make -sC games/ clean
+		rm -f $(OBJ)
 
 fclean:	clean
-	make -sC lib/ fclean
-	make -sC games/ fclean
-	@rm -f $(NAME)
+		make -sC lib/ fclean
+		make -sC games/ fclean
+		rm -f $(NAME)
 
-re:	fclean all
+re:		fclean all
 
 .PHONY:	all core games graphicals clean fclean re

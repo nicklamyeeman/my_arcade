@@ -56,7 +56,7 @@ class DisplaySDL : public IDisplay {
         SDL_Renderer *_renderer;
         SDL_Texture *_background;
         SDL_Texture *_map;
-        SDL_Color _white = { 255, 255, 255 };
+        SDL_Color _white = { 255, 255, 255, 255 };
         TTF_Font *_font;
         bool _running = true;
 

@@ -161,6 +161,8 @@ void DisplaySDL::displayUsername(std::string &username)
     int texW = 0;
     int texH = 0;
     
+    if (username.c_str() == nullptr)
+        return;
     SDL_RenderCopy(_renderer, _background, NULL, NULL);
     SDL_QueryTexture(_textT, NULL, NULL, &texW, &texH);
     SDL_Rect dstrect = { 400, 330, texW, texH };

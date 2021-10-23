@@ -27,7 +27,6 @@ class Score {
         std::string _user;
         int _line;
         std::string _game;
-        int _score;
         std::vector<std::string> _userInfo;
 };
 
